@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EmpPulse | Employee Performance Analytics & Prediction</title>
+    <!-- Google Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Style Sheet -->
+    <link rel="stylesheet" href="/static/css/style.css?v=3">
+</head>
+<body>
+    <div class="glass-bg-glow"></div>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-bolt-lightning pulse-glow-icon"></i>
+                </div>
+                <h1>EmpPulse</h1>
+            </div>
+            
+            <nav class="nav-menu">
+                <button class="nav-item active" id="tab-btn-dashboard" onclick="switchTab('dashboard')">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Dashboard</span>
+                </button>
+                <button class="nav-item" id="tab-btn-predictor" onclick="switchTab('predictor')">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <span>ML Predictor</span>
+                </button>
+                <button class="nav-item" id="tab-btn-analytics" onclick="switchTab('analytics')">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Analytics</span>
+                </button>
+                <button class="nav-item" id="tab-btn-directory" onclick="switchTab('directory')">
+                    <i class="fa-solid fa-users"></i>
+                    <span>Directory</span>
+                </button>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <p class="model-ver"><i class="fa-solid fa-circle-check text-success"></i> Random Forest v1.0</p>
+                <p class="copy">&copy; 2026 EmpPulse Analytics</p>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="header-title-container">
+                    <h2 id="header-title">Dashboard Overview</h2>
+                    <p id="header-subtitle" class="subtitle">Real-time organizational insights and model tracking</p>
+                </div>
+                <div class="header-actions">
+                    <div class="date-badge">
+                        <i class="fa-regular fa-calendar-days"></i>
+                        <span id="current-date">June 29, 2026</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Panels -->
+            <div class="content-wrapper">
+                
+                <!-- Panel 1: Dashboard Overview -->
+                <section id="panel-dashboard" class="tab-panel active">
+                    <!-- Key Stats Cards -->
+                    <div class="stats-grid">
+                        <div class="stats-card">
+                            <div class="card-glow"></div>
+                            <div class="stats-header">
+                                <span class="stats-title">Total Employees</span>
+                                <div class="stats-icon-wrapper bg-blue-trans">
+                                    <i class="fa-solid fa-users-viewfinder"></i>
+                                </div>
+                            </div>
+                            <div class="stats-value" id="stat-total-employees">0</div>
+                            <div class="stats-footer">
+                                <span class="stats-trend positive"><i class="fa-solid fa-arrow-trend-up"></i> Active</span>
+                                <span class="stats-label">in directory</span>
+                            </div>
+                        </div>
+
+                        <div class="stats-card">
+                            <div class="card-glow"></div>
+                            <div class="stats-header">
+                                <span class="stats-title">Average Performance</span>
+                                <div class="stats-icon-wrapper bg-indigo-trans">
+                                    <i class="fa-solid fa-star-half-stroke"></i>
+                                </div>
+                            </div>
+                            <div class="stats-value" id="stat-avg-performance">0.00</div>
+                            <div class="stats-footer">
+                                <div class="rating-bar-container">
+                                    <div class="rating-bar-fill" id="stat-avg-performance-bar" style="width: 0%"></div>
+                                </div>
+                                <span class="stats-label">out of 5.0</span>
+                            </div>
+                        </div>
+
+                        <div class="stats-card">
+                            <div class="card-glow"></div>
+                            <div class="stats-header">
+                                <span class="stats-title">Avg. Attendance</span>
+                                <div class="stats-icon-wrapper bg-purple-trans">
+                                    <i class="fa-solid fa-user-check"></i>
+                                </div>
+                            </div>
+                            <div class="stats-value" id="stat-avg-attendance">0.0%</div>
+                            <div class="stats-footer">
+                                <span class="stats-trend positive"><i class="fa-solid fa-shield-halved"></i> Stable</span>
+                                <span class="stats-label">retention threshold</span>
+                            </div>
+                        </div>
+
+                        <div class="stats-card">
+                            <div class="card-glow"></div>
+                            <div class="stats-header">
+                                <span class="stats-title">Promotion Rate</span>
+                                <div class="stats-icon-wrapper bg-emerald-trans">
+                                    <i class="fa-solid fa-angles-up"></i>
+                                </div>
+                            </div>
+                            <div class="stats-value" id="stat-promotion-rate">0.0%</div>
+                            <div class="stats-footer">
+                                <span class="stats-trend positive"><i class="fa-solid fa-chart-simple"></i> 37.5%</span>
+                                <span class="stats-label">career growth target</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Split Section -->
+                    <div class="dashboard-split-grid">
+                        <!-- Department Summary -->
+                        <div class="glass-card dept-summary-card">
+                            <div class="glass-card-header">
+                                <h3>Department Breakdown</h3>
+                                <p class="card-desc">Headcount, Performance ratings and Salary averages</p>
+                            </div>
+                            <div class="dept-list" id="dept-list-container">
+                                <div class="loading-spinner"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading department details...</div>
+                            </div>
+                        </div>
+
+                        <!-- Model Comparison & Summary -->
+                        <div class="glass-card model-metrics-card">
+                            <div class="glass-card-header">
+                                <h3>Predictive Model Summary</h3>
+                                <p class="card-desc">Comparison of regression metrics (R² score priority)</p>
+                            </div>
+                            <div class="model-comparison-area">
+                                <div class="comparison-row best">
+                                    <div class="comp-icon"><i class="fa-solid fa-crown text-warning"></i></div>
+                                    <div class="comp-details">
+                                        <div class="comp-name">Random Forest Regressor <span class="badge badge-success">Selected</span></div>
+                                        <div class="comp-metrics">R²: 0.8926 | MAE: 0.1520 | RMSE: 0.2085</div>
+                                    </div>
+                                    <div class="comp-rank">#1</div>
+                                </div>
+                                <div class="comparison-row">
+                                    <div class="comp-icon"><i class="fa-solid fa-award"></i></div>
+                                    <div class="comp-details">
+                                        <div class="comp-name">Linear Regression</div>
+                                        <div class="comp-metrics">R²: 0.8889 | MAE: 0.1561 | RMSE: 0.2121</div>
+                                    </div>
+                                    <div class="comp-rank">#2</div>
+                                </div>
+                                <div class="comparison-row">
+                                    <div class="comp-icon"><i class="fa-solid fa-award"></i></div>
+                                    <div class="comp-details">
+                                        <div class="comp-name">Decision Tree Regressor</div>
+                                        <div class="comp-metrics">R²: 0.8153 | MAE: 0.2037 | RMSE: 0.2734</div>
+                                    </div>
+                                    <div class="comp-rank">#3</div>
+                                </div>
+                            </div>
+                            
+                            <div class="manager-ratings-area">
+                                <h4>Manager Score Distribution</h4>
+                                <div class="manager-bars" id="manager-bars-container">
+                                    <!-- Dynamic bars -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Panel 2: ML Performance Predictor -->
+                <section id="panel-predictor" class="tab-panel">
+                    <div class="predictor-layout">
+                        <!-- Input Section -->
+                        <div class="glass-card predictor-form-card">
+                            <div class="glass-card-header">
+                                <h3>Employee Parameters</h3>
+                                <p class="card-desc">Adjust variables to run the performance rating simulation</p>
+                            </div>
+                            
+                            <!-- Model Selector -->
+                            <div class="model-selector-group">
+                                <span class="model-selector-label">Prediction Model</span>
+                                <div class="model-radio-row">
+                                    <label class="model-radio-item active" id="model-label-random_forest">
+                                        <input type="radio" name="model-choice" value="random_forest" checked onchange="selectModel(this)">
+                                        <span class="model-radio-name">Random Forest</span>
+                                        <span class="model-radio-metric">R² 0.893</span>
+                                    </label>
+                                    <label class="model-radio-item" id="model-label-linear_regression">
+                                        <input type="radio" name="model-choice" value="linear_regression" onchange="selectModel(this)">
+                                        <span class="model-radio-name">Linear Regression</span>
+                                        <span class="model-radio-metric">R² 0.889</span>
+                                    </label>
+                                    <label class="model-radio-item" id="model-label-decision_tree">
+                                        <input type="radio" name="model-choice" value="decision_tree" onchange="selectModel(this)">
+                                        <span class="model-radio-name">Decision Tree</span>
+                                        <span class="model-radio-metric">R² 0.815</span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <!-- Template Preset Area -->
+                            <div class="presets-section">
+                                <span class="preset-label">Templates:</span>
+                                <button type="button" class="preset-btn" onclick="applyPreset('star')"><i class="fa-solid fa-arrow-trend-up"></i> Star Performer</button>
+                                <button type="button" class="preset-btn" onclick="applyPreset('struggling')"><i class="fa-solid fa-arrow-trend-down"></i> Struggling</button>
+                                <button type="button" class="preset-btn" onclick="applyPreset('new_joiner')"><i class="fa-solid fa-user-plus"></i> New Joiner</button>
+                                <button type="button" class="preset-btn" onclick="applyPreset('average')"><i class="fa-solid fa-user-tie"></i> Standard</button>
+                            </div>
+
+                            <form id="predictor-form" class="predictor-grid-form" onsubmit="runPrediction(event)">
+                                <!-- Category Details -->
+                                <div class="form-section-title">Demographics & Position</div>
+                                
+                                <div class="form-group">
+                                    <label for="input-age">Age</label>
+                                    <input type="number" id="input-age" min="21" max="60" value="40" required>
+                                    <span class="range-hint">Range: 21 - 60</span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="input-gender">Gender</label>
+                                    <select id="input-gender" required>
+                                        <option value="Female">Female</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Non-binary">Non-binary</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="input-department">Department</label>
+                                    <select id="input-department" required>
+                                        <option value="IT">IT</option>
+                                        <option value="HR">HR</option>
+                                        <option value="Finance">Finance</option>
+                                        <option value="Marketing">Marketing</option>
+                                        <option value="Operations">Operations</option>
+                                        <option value="Sales">Sales</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="input-experience">Experience (Years)</label>
+                                    <input type="number" id="input-experience" min="0" max="39" value="10" required>
+                                    <span class="range-hint">Range: 0 - 39</span>
+                                </div>
+
+                                <div class="form-group full-width">
+                                    <label for="input-salary">Annual Salary (Rs)</label>
+                                    <div class="slider-container">
+                                        <input type="range" id="input-salary" min="33000" max="160000" value="79000" step="500" oninput="updateSliderVal('salary', this.value)">
+                                        <span class="slider-val" id="val-salary">Rs 79,000</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-section-title">Performance & Work Metrics</div>
+
+                                <div class="form-group">
+                                    <label for="input-attendance">Attendance (%)</label>
+                                    <div class="slider-container">
+                                        <input type="range" id="input-attendance" min="75" max="100" value="94" step="0.5" oninput="updateSliderVal('attendance', this.value)">
+                                        <span class="slider-val" id="val-attendance">94%</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="input-training">Training Hours</label>
+                                    <div class="slider-container">
+                                        <input type="range" id="input-training" min="10" max="90" value="50" step="1" oninput="updateSliderVal('training', this.value)">
+                                        <span class="slider-val" id="val-training">50 hrs</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="input-projects">Projects Completed</label>
+                                    <input type="number" id="input-projects" min="1" max="10" value="5" required>
+                                    <span class="range-hint">Range: 1 - 10</span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="input-overtime">Overtime Hours (Monthly)</label>
+                                    <input type="number" id="input-overtime" min="0" max="60" value="30" required>
+                                    <span class="range-hint">Range: 0 - 60</span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="input-manager">Manager Rating</label>
+                                    <select id="input-manager" required>
+                                        <option value="1">1 - Needs Improvement</option>
+                                        <option value="2">2 - Below Expectations</option>
+                                        <option value="3" selected>3 - Meets Expectations</option>
+                                        <option value="4">4 - Exceeds Expectations</option>
+                                        <option value="5">5 - Outstanding</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="input-promotion">Promotion Status</label>
+                                    <select id="input-promotion" required>
+                                        <option value="0" selected>Not Promoted recently</option>
+                                        <option value="1">Promoted recently</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group full-width btn-container">
+                                    <button type="submit" class="predict-btn">
+                                        <i class="fa-solid fa-wand-magic-sparkles"></i> Run Prediction Simulation
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Result Section -->
+                        <div class="glass-card predictor-result-card empty" id="prediction-result-panel">
+                            <div class="result-placeholder">
+                                <i class="fa-solid fa-brain brain-pulse"></i>
+                                <h3>Simulation Awaiting Trigger</h3>
+                                <p>Adjust employee parameters on the left and run the prediction to see the simulated performance rating dashboard.</p>
+                            </div>
+                            
+                            <div class="result-content" style="display: none;">
+                                <div class="prediction-tier-badge" id="result-tier">Tier: High</div>
+                                
+                                <div class="gauge-section">
+                                    <div class="circular-gauge">
+                                        <svg viewBox="0 0 100 100">
+                                            <circle class="gauge-bg" cx="50" cy="50" r="40"></circle>
+                                            <circle class="gauge-fill" id="gauge-fill-circle" cx="50" cy="50" r="40" style="stroke-dashoffset: 251.2;"></circle>
+                                        </svg>
+                                        <div class="gauge-value" id="result-rating">0.00</div>
+                                    </div>
+                                    <span class="gauge-label">Simulated Performance Rating</span>
+                                </div>
+
+                                <div class="comparison-bar-panel">
+                                    <div class="comp-stat-row">
+                                        <span>Model Used:</span>
+                                        <strong id="result-model-used" style="color: var(--accent-indigo);">—</strong>
+                                    </div>
+                                    <div class="comp-stat-row">
+                                        <span>Difference from Org Average:</span>
+                                        <strong id="result-diff">+0.00</strong>
+                                    </div>
+                                    <div class="comp-stat-row">
+                                        <span>Org Performance Percentile:</span>
+                                        <strong id="result-percentile">0.0%</strong>
+                                    </div>
+                                </div>
+
+                                <div class="result-insights-box">
+                                    <h4><i class="fa-regular fa-lightbulb text-warning"></i> Simulated Insights & Guidance</h4>
+                                    <ul id="result-insights-list">
+                                        <!-- Dynamic list -->
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Panel 3: Analytics Plots -->
+                <section id="panel-analytics" class="tab-panel">
+                    <div class="analytics-tabs-header">
+                        <button class="analytics-tab active" onclick="switchAnalyticsCategory('model')">Model Performance</button>
+                        <button class="analytics-tab" onclick="switchAnalyticsCategory('core')">Performance Insights</button>
+                        <button class="analytics-tab" onclick="switchAnalyticsCategory('org')">Organizational EDA</button>
+                    </div>
+
+                    <!-- Category: Model Performance -->
+                    <div id="analytics-cat-model" class="analytics-gallery active">
+                        <div class="plot-card" onclick="openPlotModal('/api/plots/model_feature_importances.png', 'Model Feature Importances', 'Identifies the impact of each variable on the employee rating. Manager Rating, attendance percentage, and training hours are leading drivers.')">
+                            <div class="plot-img-container">
+                                <img src="/api/plots/model_feature_importances.png" alt="Feature Importances">
+                            </div>
+                            <div class="plot-info">
+                                <h4>Feature Importances</h4>
+                                <p>Learn what drivers influence the Random Forest predictions the most.</p>
+                            </div>
+                        </div>
+                        <div class="plot-card" onclick="openPlotModal('/api/plots/model_actual_vs_predicted.png', 'Actual vs. Predicted Performance Ratings', 'Plots model predictions against verified performance scores in the evaluation set to visualize fit.')">
+                            <div class="plot-img-container">
+                                <img src="/api/plots/model_actual_vs_predicted.png" alt="Actual vs Predicted">
+                            </div>
+                            <div class="plot-info">
+                                <h4>Actual vs. Predicted</h4>
+                                <p>Model prediction accuracy and residuals visualizer.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category: Performance Insights -->
+                    <div id="analytics-cat-core" class="analytics-gallery">
+                        <div class="plot-card" onclick="openPlotModal('/api/plots/performance_vs_attendance.png', 'Performance vs. Attendance Percentage', 'Scatter plot displaying how attendance percentage affects the final performance ratings.')">
+                            <div class="plot-img-container">
+                                <img src="/api/plots/performance_vs_attendance.png" alt="Performance vs Attendance">
+                            </div>
+                            <div class="plot-info">
+                                <h4>Performance vs. Attendance</h4>
+                                <p>How absenteeism directly limits performance ratings.</p>
+                            </div>
+                        </div>
+                        <div class="plot-card" onclick="openPlotModal('/api/plots/performance_vs_training.png', 'Performance Rating vs. Training Hours', 'Tracks how professional development hours map to overall employee scores.')">
+                            <div class="plot-img-container">
+                                <img src="/api/plots/performance_vs_training.png" alt="Performance vs Training">
+                            </div>
+                            <div class="plot-info">
+                                <h4>Performance vs. Training</h4>
+                                <p>Evaluating skill acquisition investments against outcomes.</p>
+                            </div>
+                        </div>
+                        <div class="plot-card" onclick="openPlotModal('/api/plots/promotion_vs_performance.png', 'Promotion Rate vs. Performance Rating', 'Box plot showing performance ranges of promoted vs standard employees.')">
+                            <div class="plot-img-container">
+                                <img src="/api/plots/promotion_vs_performance.png" alt="Promotion vs Performance">
+                            </div>
+                            <div class="plot-info">
+                                <h4>Promotion vs. Performance</h4>
+                                <p>Analyzing performance milestones required for career progression.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category: Organizational EDA -->
+                    <div id="analytics-cat-org" class="analytics-gallery">
+                        <div class="plot-card" onclick="openPlotModal('/api/plots/correlation_heatmap.png', 'Correlation Heatmap', 'Identifies pairwise correlations between numerical features like age, experience, and salary.')">
+                            <div class="plot-img-container">
+                                <img src="/api/plots/correlation_heatmap.png" alt="Correlation Heatmap">
+                            </div>
+                            <div class="plot-info">
+                                <h4>Correlation Heatmap</h4>
+                                <p>Global correlations across metrics.</p>
+                            </div>
+                        </div>
+                        <div class="plot-card" onclick="openPlotModal('/api/plots/department_promotion_rate.png', 'Promotion Rates by Department', 'Bar chart outlining which departments have the highest ratios of promotions.')">
+                            <div class="plot-img-container">
+                                <img src="/api/plots/department_promotion_rate.png" alt="Department Promotion Rate">
+                            </div>
+                            <div class="plot-info">
+                                <h4>Promotion Rate by Department</h4>
+                                <p>A comparison of career mobility across organization units.</p>
+                            </div>
+                        </div>
+                        <div class="plot-card" onclick="openPlotModal('/api/plots/performance_by_department.png', 'Average Performance by Department', 'A review of the average ratings across organizational divisions.')">
+                            <div class="plot-img-container">
+                                <img src="/api/plots/performance_by_department.png" alt="Performance by Department">
+                            </div>
+                            <div class="plot-info">
+                                <h4>Performance by Department</h4>
+                                <p>Breakdown of standard performance ratings.</p>
+                            </div>
+                        </div>
+                        <div class="plot-card" onclick="openPlotModal('/api/plots/salary_distribution.png', 'Organizational Salary Distribution', 'Frequency density plot outlining how salaries are distributed across the workforce.')">
+                            <div class="plot-img-container">
+                                <img src="/api/plots/salary_distribution.png" alt="Salary Distribution">
+                            </div>
+                            <div class="plot-info">
+                                <h4>Salary Distribution</h4>
+                                <p>Understanding corporate pay distributions.</p>
+                            </div>
+                        </div>
+                        <div class="plot-card" onclick="openPlotModal('/api/plots/salary_vs_department.png', 'Salary Ranges by Department', 'Compares wage distributions, salaries, and spreads across different departments.')">
+                            <div class="plot-img-container">
+                                <img src="/api/plots/salary_vs_department.png" alt="Salary vs Department">
+                            </div>
+                            <div class="plot-info">
+                                <h4>Salary by Department</h4>
+                                <p>Comparison of salary bands across teams.</p>
+                            </div>
+                        </div>
+                        <div class="plot-card" onclick="openPlotModal('/api/plots/gender_distribution.png', 'Gender Breakdown', 'Identifies employee representation profiles across gender classifications.')">
+                            <div class="plot-img-container">
+                                <img src="/api/plots/gender_distribution.png" alt="Gender Distribution">
+                            </div>
+                            <div class="plot-info">
+                                <h4>Gender Distribution</h4>
+                                <p>Overview of organizational diversity metrics.</p>
+                            </div>
+                        </div>
+                        <div class="plot-card" onclick="openPlotModal('/api/plots/manager_vs_performance.png', 'Manager Rating vs. Employee Performance', 'Scatter plot visualizing how employee rating correlates with manager assessment rating.')">
+                            <div class="plot-img-container">
+                                <img src="/api/plots/manager_vs_performance.png" alt="Manager vs Performance">
+                            </div>
+                            <div class="plot-info">
+                                <h4>Manager Rating vs. Performance</h4>
+                                <p>Analyzing correlation between supervision score and ratings.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Panel 4: Employee Directory -->
+                <section id="panel-directory" class="tab-panel">
+                    <div class="glass-card directory-card">
+                        <!-- Filters Toolbar -->
+                        <div class="directory-toolbar">
+                            <div class="search-box">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <input type="text" id="dir-search" placeholder="Search Employee ID..." oninput="handleDirectorySearch()">
+                            </div>
+                            
+                            <div class="filters-box">
+                                <div class="filter-group">
+                                    <label for="dir-filter-dept">Department</label>
+                                    <select id="dir-filter-dept" onchange="loadDirectory()">
+                                        <option value="All">All Departments</option>
+                                        <option value="IT">IT</option>
+                                        <option value="HR">HR</option>
+                                        <option value="Finance">Finance</option>
+                                        <option value="Marketing">Marketing</option>
+                                        <option value="Operations">Operations</option>
+                                        <option value="Sales">Sales</option>
+                                    </select>
+                                </div>
+                                <div class="filter-group">
+                                    <label for="dir-filter-gender">Gender</label>
+                                    <select id="dir-filter-gender" onchange="loadDirectory()">
+                                        <option value="All">All Genders</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Non-binary">Non-binary</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Data Grid Table -->
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Age</th>
+                                        <th>Gender</th>
+                                        <th>Department</th>
+                                        <th>Exp</th>
+                                        <th>Salary</th>
+                                        <th>Attendance</th>
+                                        <th>Training</th>
+                                        <th>Projects</th>
+                                        <th>Overtime</th>
+                                        <th>Mgr Rating</th>
+                                        <th>Perf Rating</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="directory-table-body">
+                                    <!-- Dynamic rows -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Pagination Toolbar -->
+                        <div class="pagination-toolbar">
+                            <div class="pagination-info">
+                                Showing <span id="pag-start">0</span> - <span id="pag-end">0</span> of <span id="pag-total">0</span> employees
+                            </div>
+                            <div class="pagination-buttons">
+                                <button class="pag-btn" id="pag-prev" onclick="prevPage()"><i class="fa-solid fa-chevron-left"></i> Previous</button>
+                                <div class="pag-pages" id="pag-pages-container">
+                                    <!-- Dynamic page numbers -->
+                                </div>
+                                <button class="pag-btn" id="pag-next" onclick="nextPage()">Next <i class="fa-solid fa-chevron-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Plot Details Modal -->
+    <div class="modal" id="plot-modal">
+        <div class="modal-backdrop" onclick="closePlotModal()"></div>
+        <div class="modal-content glass-card">
+            <button class="modal-close-btn" onclick="closePlotModal()"><i class="fa-solid fa-xmark"></i></button>
+            <h3 id="modal-plot-title">Plot Title</h3>
+            <p id="modal-plot-desc" class="card-desc">Description of the chart and analysis insights.</p>
+            <div class="modal-plot-container">
+                <img id="modal-plot-img" src="" alt="Plot View">
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Frontend Javascript -->
+    <script src="/static/js/app.js?v=3"></script>
+</body>
+</html>
